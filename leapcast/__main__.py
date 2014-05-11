@@ -8,10 +8,13 @@ import logging
 import sys
 from os import environ
 
+sys.path.append('.')
 
 from leapcast.environment import parse_cmd, Environment
 from leapcast.services.leap import LEAPserver
 from leapcast.services.ssdp import SSDPserver
+from leapcast.services.bonjour import BonjourServer
+from leapcast.services.castsocket import CastSocketServer
 
 logger = logging.getLogger('Leapcast')
 
@@ -25,14 +28,22 @@ def main():
         sys.exit(1)
 
     def shutdown(signum, frame):
-        ssdp_server.shutdown()
+        #ssdp_server.shutdown()
+        bonjour_server.shutdown()
+        castsocket_server.shutdown()
         leap_server.sig_handler(signum, frame)
 
     signal.signal(signal.SIGTERM, shutdown)
     signal.signal(signal.SIGINT, shutdown)
 
-    ssdp_server = SSDPserver()
-    ssdp_server.start(Environment.interfaces)
+    #ssdp_server = SSDPserver()
+    #ssdp_server.start(Environment.interfaces)
+
+    castsocket_server = CastSocketServer()
+    castsocket_server.start()
+
+    bonjour_server = BonjourServer()
+    bonjour_server.start(Environment.uuid, Environment.friendlyName)
 
     leap_server = LEAPserver()
     leap_server.start()
