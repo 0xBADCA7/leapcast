@@ -42,7 +42,7 @@ class DeviceHandler(tornado.web.RequestHandler):
         if Environment.ips and self.request.remote_ip not in Environment.ips:
             raise tornado.web.HTTPError(403)
 
-        if self.request.uri == "/apps":
+        if self.request.uri == "/apps" or self.request.uri == "/apps/":
             for app, astatus in Environment.global_status.items():
                 if astatus["state"] == "running":
                     self.redirect("/apps/%s" % app)

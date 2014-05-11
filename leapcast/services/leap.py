@@ -21,6 +21,7 @@ class LEAPserver(object):
             (r"/ssdp/device-desc.xml", DeviceHandler),
             (r"/setup/([^\/]+)", SetupHandler),
             (r"/apps", DeviceHandler),
+            (r"/apps/", DeviceHandler),
             (r"/connection", ServiceChannel),
             (r"/connection/([^\/]+)", ChannelFactory),
             (r"/receiver/([^\/]+)", ReceiverChannel),
