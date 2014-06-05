@@ -34,3 +34,12 @@ nosetests.xml
 .project
 .pydevproject
 .idea**
+
+# generated protobuf files
+leapcast/cast_proto/*.py
+
+# The "private" stuff :)
+cert/
+cert/client.crt
+cert/self-signed.pem
+cert/self-signed.sig
